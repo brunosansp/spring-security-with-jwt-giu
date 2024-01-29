@@ -1,23 +1,19 @@
 package br.com.brunosan.springsecuritywithjwtgiu.controller;
 
-import br.com.brunosan.springsecuritywithjwtgiu.service.AuthenticationService;
-import org.springframework.web.bind.annotation.GetMapping;
+import br.com.brunosan.springsecuritywithjwtgiu.security.AuthenticationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("auth")
 public class AuthenticationController {
     
-    private final AuthenticationService service;
+    @Autowired
+    private AuthenticationService service;
     
-    public AuthenticationController(AuthenticationService service) {
-        this.service = service;
-    }
-    
-    @PostMapping
-    public String auth() {
-        return service.authenticate();
+    @PostMapping("authenticate")
+    public String auth(Authentication authentication) {
+        return service.authenticate(authentication);
     }
 }
